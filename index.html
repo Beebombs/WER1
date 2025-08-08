@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AllU – Simply Happy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Base styles */
+    html, body { margin:0; padding:0; font-family:'Inter',sans-serif; background:#EDF2ED; color:#2F3D2F; scroll-behavior:smooth; overflow-x:hidden; }
+    section { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:40px 20px; }
+    h1 { font-size:48px; margin:0; }
+    h2 { font-size:28px; margin:20px 0; }
+    p { font-size:18px; margin:10px 0; }
+    .button { background:#355E3B; color:#FFF; padding:12px 24px; border:none; border-radius:24px; font-size:16px; cursor:pointer; transition:background 0.3s; }
+    .button:hover { background:#2E5031; }
+    .card { background:#FFF; border-radius:16px; padding:30px; max-width:500px; width:100%; position:relative; overflow:hidden; }
+    textarea { width:100%; padding:12px; font-size:16px; border:1px solid #C9D7C0; border-radius:8px; resize:vertical; }
+    /* Leaf particle styles */
+    .leaf { position:absolute; font-size:24px; opacity:0; will-change:transform, opacity; }
+    @keyframes leaf-fly {
+      0% { opacity:1; transform: translate(0,0) rotate(0deg) scale(1); }
+      30% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)deg) scale(1.2); }
+      100% { opacity:0; transform: translate(calc(var(--dx)*1.5), calc(var(--dy)*1.5)) rotate(calc(var(--rot)*1.5)deg) scale(0.5); }
+    }
+    /* Hide/onload sections */
+    .hidden { display:none; }
+  </style>
+</head>
+<body>
+  <audio id="wind" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_7e63915afa.mp3?filename=gentle-wind-chime-6803.mp3"></audio>
+
+  <!-- Welcome -->
+  <section id="welcome">
+    <h1>AllU</h1>
+    <h2>Simply Happy.</h2>
+    <p>Welcome, let’s get started.</p>
+    <button class="button" onclick="showSection('todo')">Get Started</button>
+  </section>
+
+  <!-- To-Do -->
+  <section id="todo" class="hidden">
+    <div class="card">
+      <h2>What do you need to do today?</h2>
+      <textarea id="todoInput" rows="4" placeholder="Type your tasks..."></textarea>
+      <p style="font-size:14px;color:#7A896F;">Copy into your notes app.</p>
+      <button class="button" onclick="showSection('letgo')">Next</button>
+    </div>
+  </section>
+
+  <!-- Let Go -->
+  <section id="letgo" class="hidden">
+    <div class="card" id="letgoCard">
+      <h2>What do you need to let go of?</h2>
+      <textarea id="letgoInput" rows="2" placeholder="Type to release..."></textarea>
+      <button class="button" onclick="triggerScatter()">Let it Go</button>
+    </div>
+  </section>
+
+  <!-- Nature Prompt -->
+  <section id="nature" class="hidden">
+    <div class="card">
+      <h2 id="natureText">Reconnect with nature</h2>
+      <p id="natureIcon" style="font-size:48px;">🌿</p>
+      <button class="button" onclick="showSection('welcome')">Restart</button>
+    </div>
+  </section>
+
+  <script>
+    const prompts = [
+      {text:'Feel the grass under your feet.', emoji:'🌱'},
+      {text:'Hug a tree, breathe deeply.', emoji:'🌳'},
+      {text:'Watch clouds drift.', emoji:'☁️'},
+      {text:'Feel the breeze on your face.', emoji:'🌬️'},
+      {text:'Whisper to a bird.', emoji:'🐦'}
+    ];
+
+    function showSection(id) {
+      ['welcome','todo','letgo','nature'].forEach(sec => document.getElementById(sec).classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+      window.scrollTo({ top:0, behavior:'smooth' });
+    }
+
+    function triggerScatter() {
+      const card = document.getElementById('letgoCard');
+      const wind = document.getElementById('wind'); wind.currentTime=0; wind.play();
+      const rect = card.getBoundingClientRect();
+      // remove controls
+      card.querySelector('textarea').remove();
+      card.querySelector('button').remove();
+      // create leaves
+      for(let i=0;i<30;i++){
+        const leaf = document.createElement('div'); leaf.className='leaf'; leaf.textContent='🍃';
+        // random direction
+        const dx = (Math.random()*200 - 100) + 'px';
+        const dy = (Math.random()*150 + 50) + 'px';
+        const rot = Math.random()*360;
+        leaf.style.left = (rect.width/2) + 'px';
+        leaf.style.top = (rect.height/2) + 'px';
+        leaf.style.setProperty('--dx', dx);
+        leaf.style.setProperty('--dy', '-'+dy);
+        leaf.style.setProperty('--rot', rot);
+        card.appendChild(leaf);
+        // animate with random delay
+        leaf.style.animation = `leaf-fly 2s ease-out ${Math.random()*0.5}s forwards`;
+      }
+      setTimeout(()=>{
+        const pick = prompts[Math.floor(Math.random()*prompts.length)];
+        document.getElementById('natureText').innerText=pick.text;
+        document.getElementById('natureIcon').innerText=pick.emoji;
+        showSection('nature');
+      },2600);
+    }
+
+    // init
+    showSection('welcome');
+  </script>
+</body>
+</html>
