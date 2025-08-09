@@ -30,13 +30,34 @@
 <body>
   <audio id="wind" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_7e63915afa.mp3?filename=gentle-wind-chime-6803.mp3"></audio>
 
-  <!-- Welcome -->
-  <section id="welcome">
-    <h1>AllU</h1>
-    <h2>Simply Happy.</h2>
-    <p>Welcome, start your day.</p>
-    <button class="button" onclick="showSection('todo')">Get Started</button>
-  </section>
+<section class="hero" id="welcome">
+  <!-- floating leaves -->
+  <span class="leaf l1">🍃</span>
+  <span class="leaf l2">🍃</span>
+  <span class="leaf l3">🍃</span>
+  <span class="leaf l4">🍃</span>
+
+  <div class="hero__content">
+    <div class="hero__brand">
+      <div class="hero__logo">AU</div>
+      <div>
+        <div class="hero__title">AllU</div>
+        <div class="hero__tag">Simply Happy.</div>
+      </div>
+    </div>
+
+    <p class="hero__text">
+      A gentle daily rhythm: set your plan, release what weighs you down, then step outside for a breath of nature.
+    </p>
+
+    <button class="hero__cta" onclick="document.getElementById('todo').scrollIntoView({behavior:'smooth'})">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-width="2" d="M12 5v14M5 12l7 7 7-7"/></svg>
+      Get Started
+    </button>
+  </div>
+
+  <div class="scroll-cue" title="Scroll"></div>
+</section>
 
   <!-- To-Do -->
   <section id="todo" class="hidden">
