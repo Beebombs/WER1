@@ -26,6 +26,7 @@
     background: url('Hero background.png') center/cover no-repeat fixed;
   }
 
+  /* Subtle global vignette */
   body::after{
     content:""; position:fixed; inset:0; pointer-events:none;
     background: radial-gradient(1200px 700px at 50% 10%, transparent 0, transparent 55%, rgba(0,0,0,.06) 100%);
@@ -57,7 +58,10 @@
   }
   @keyframes lift{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
+  /* Wordmark only (leaf removed) */
   .wordmark{width:min(70vw,420px);margin:0 auto 12px auto;display:block}
+  .wordmark text{font:600 76px/1 "Cormorant Garamond", serif; letter-spacing:.5px; fill:#2f5d3a; text-anchor:middle}
+
   .tag{color:var(--muted);font-weight:600;font-size:clamp(16px,2.1vw,20px)}
   .copy{margin:16px auto 26px;max-width:64ch;color:var(--body);font-size:clamp(16px,1.6vw,18px)}
 
@@ -75,11 +79,11 @@
   .scroll-cue::after{content:"";width:4px;height:8px;border-radius:2px;background:#7ea08f;animation:cue 1.6s ease-in-out infinite}
   @keyframes cue{0%{transform:translateY(-8px);opacity:0}40%{opacity:1}100%{transform:translateY(8px);opacity:0}}
 
-  /* Shared UI */
-  .stack{display:grid;gap:16px;justify-items:center;}
+  /* Shared UI (center everything in cards) */
+  .stack{display:grid;gap:16px;justify-items:center;align-items:center;}
   .label{font-weight:700;color:var(--muted)}
   textarea{
-    width: min(92vw, 720px);
+    width: min(90%, 720px);           /* relative to the card, not viewport */
     min-height: 120px;
     padding: 14px 16px;
     border: 1px solid #c9d8cf;
@@ -89,12 +93,13 @@
     color: var(--ink);
     background: #fff;
     display: block;
-    margin: 0 auto;
+    margin: 0 auto;                   /* horizontal centering */
+    place-self: center;               /* grid centering */
   }
   .row{
     display:flex;
     gap:10px;
-    justify-content:center;
+    justify-content:center;           /* centre buttons */
     flex-wrap:wrap;
     margin-top:10px;
   }
@@ -128,15 +133,9 @@
 
   <div class="hero-wrap">
     <div class="card">
+      <!-- Wordmark centred, no leaf -->
       <svg class="wordmark" viewBox="0 0 420 120" aria-label="AllU" role="img">
-        <defs>
-          <style>
-            .w1{font:600 76px/1 "Cormorant Garamond", serif; letter-spacing:.5px; fill:#2f5d3a}
-            .leaf{fill:#6f907c}
-          </style>
-        </defs>
-        <text x="10" y="82" class="w1">AllU</text>
-        <path class="leaf" d="M210 35c10-16 30-22 48-12-15 14-33 18-48 12z"/>
+        <text x="210" y="82">AllU</text>
       </svg>
 
       <div class="tag">Simply Happy.</div>
@@ -220,6 +219,7 @@
     }catch(e){}
   }
 
+  /* Burst uses your SVGs */
   const burstSources = [
     "./Bee.svg",
     "./6.svg",
