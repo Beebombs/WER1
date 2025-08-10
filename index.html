@@ -26,7 +26,6 @@
     background: url('Hero background.png') center/cover no-repeat fixed;
   }
 
-  /* Subtle global vignette */
   body::after{
     content:""; position:fixed; inset:0; pointer-events:none;
     background: radial-gradient(1200px 700px at 50% 10%, transparent 0, transparent 55%, rgba(0,0,0,.06) 100%);
@@ -77,13 +76,28 @@
   @keyframes cue{0%{transform:translateY(-8px);opacity:0}40%{opacity:1}100%{transform:translateY(8px);opacity:0}}
 
   /* Shared UI */
-  .stack{display:grid;gap:16px}
+  .stack{display:grid;gap:16px;justify-items:center;}
   .label{font-weight:700;color:var(--muted)}
   textarea{
-    width:min(92vw,720px);min-height:120px;padding:14px 16px;
-    border:1px solid #c9d8cf;border-radius:12px;font:inherit;font-size:16px;color:var(--ink);background:#fff
+    width: min(92vw, 720px);
+    min-height: 120px;
+    padding: 14px 16px;
+    border: 1px solid #c9d8cf;
+    border-radius: 12px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    background: #fff;
+    display: block;
+    margin: 0 auto;
   }
-  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .row{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:10px;
+  }
   .btn-secondary{background:#fff;color:var(--cta);border:1px solid var(--ring);padding:10px 14px;border-radius:14px;font-weight:600;cursor:pointer}
 
   /* Burst animation (image-based) */
@@ -206,7 +220,6 @@
     }catch(e){}
   }
 
-  /* Burst icons from your files */
   const burstSources = [
     "./Bee.svg",
     "./6.svg",
@@ -251,7 +264,6 @@
     setTimeout(()=>{ showNudge(); goTo('nature'); btn.disabled=false; }, 1600);
   }
 
-  /* Your four nature prompts */
   const nudges = [
     { text:"Go lie naked in the grass", icon:"🌱" },
     { text:"Go for a walk in the woods without your shoes", icon:"🌲" },
